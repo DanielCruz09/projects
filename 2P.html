@@ -2,119 +2,149 @@
 <html>
 
 <head>
-    <title>Checkers Game</title>
-    <link rel="stylesheet" type="text/css" href="2P.css">
+    <title>
+
+    </title>
+    <link rel="stylesheet" href="2P.css">
+
 </head>
 
-<body>
-    <div id="checker-board">
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
+<body id="ht">
+    <!-- astea 2 sunt puse ca indexarea claselor sa inceapa de la 1 -->
+    <div class="checker white_checker" style="display:none"> </div>
+    <div class="checker black_checker" style="display:none"> </div>
 
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
 
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
+    <div class="square" style="display: none" id="ht"> </div>
+    <div class="black_background" id="black_background"> </div>
 
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-        <div class="light square"></div>
-        <div class="dark square"></div>
-
-        <div class="black checker" id="black-checker-1"></div>
-        <div class="black checker" id="black-checker-2"></div>
-        <div class="black checker" id="black-checker-3"></div>
-        <div class="black checker" id="black-checker-4"></div>
-        <div class="black checker" id="black-checker-5"></div>
-        <div class="black checker" id="black-checker-6"></div>
-        <div class="black checker" id="black-checker-7"></div>
-        <div class="black checker" id="black-checker-8"></div>
-        <div class="black checker" id="black-checker-9"></div>
-        <div class="black checker" id="black-checker-10"></div>
-        <div class="black checker" id="black-checker-11"></div>
-        <div class="black checker" id="black-checker-12"></div>
-        <div class="red checker" id="red-checker-1"></div>
-        <div class="red checker" id="red-checker-2"></div>
-        <div class="red checker" id="red-checker-3"></div>
-        <div class="red checker" id="red-checker-4"></div>
-        <div class="red checker" id="red-checker-5"></div>
-        <div class="red checker" id="red-checker-6"></div>
-        <div class="red checker" id="red-checker-7"></div>
-        <div class="red checker" id="red-checker-8"></div>
-        <div class="red checker" id="red-checker-9"></div>
-        <div class="red checker" id="red-checker-10"></div>
-        <div class="red checker" id="red-checker-11"></div>
-        <div class="red checker" id="red-checker-12"></div>
+    <div class="score" id="score">
+        <br>
     </div>
+    <div class="table" id="table">
+
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+        <div class="checker white_checker"> </div>
+
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
+        <div class="checker black_checker"> </div>
 
 
-    <div class="scores-container">
-        <div class="score red-score">Red Score: <span id="red-score">0</span></div>
-        <div class="score black-score">Black Score: <span id="black-score">0</span></div>
-        <div id="turn">It's <span class="turn-color" id="turn-color">Red</span>'s turn</div>
-        <div id="winner"></div>
-        <button id="restart-btn">Restart</button>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="clear_float"> </div>
+
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="clear_float"> </div>
+
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="clear_float"> </div>
+
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="clear_float"> </div>
+
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="clear_float"> </div>
+
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="clear_float"> </div>
+
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="clear_float"> </div>
+
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="square white_square"> </div>
+        <div class="square black_square"> </div>
+        <div class="clear_float"> </div>
+
     </div>
-    <script src="script.js"></script>
+    <script src="script.js"> </script>
+</body>
+
+</html>
+
+
+<div class="scores-container">
+    <div class="score red-score">Red Score: <span id="red-score">0</span></div>
+    <div class="score black-score">Black Score: <span id="black-score">0</span></div>
+    <div id="turn">It's <span class="turn-color" id="turn-color">Red</span>'s turn</div>
+    <div id="winner"></div>
+    <button id="restart-btn">Restart</button>
+</div>
+<script src="scripts.js"></script>
 </body>
 
 </html>
