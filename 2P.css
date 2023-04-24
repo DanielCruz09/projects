@@ -81,9 +81,27 @@ html {
     cursor: pointer;
 }
 
+
 #restart-btn:hover {
     background-color: #2980b9;
     color: white;
+}
+
+#move-btn:hover {
+    background-color: #2980b9;
+    color: white;
+}
+
+#move-btn {
+    background-color: white;
+    color: #2980b9;
+    border: 2px solid #2980b9;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 8px 16px;
+    margin-top: 16px;
+    cursor: pointer;
 }
 
 

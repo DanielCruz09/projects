@@ -7,6 +7,7 @@ var score = document.getElementById("score");
 var black_background = document.getElementById("black_background");
 var moveSound = document.getElementById("moveSound");
 var winSound = document.getElementById("winSound");
+var slectedChecker = null;
 var windowHeight = window.innerHeight
     || document.documentElement.clientHeight
     || document.body.clientHeight;;
@@ -156,7 +157,22 @@ function getDimension() {
 }
 
 
+function makeMovable(id){ //this function needs to run once to make an object movable
+    console.log("entred function makeMovable");
+    var checker = document.getElementById(id);
+    checker.style.position = "absolute"; //I beleave this makes the position an absolute x,y value
+    checker.onmousedown = function(){ //this adds a finction that happnes when peice is clicked
+        dragingPeice = checker;//the peice that is currently being dragged
+    }
+}
 
+document.onmousemove = function(e){//function runs whenever mouse moves
+    var x = e.pageX;
+    var y = e.pageY;
+
+    dragingPeice.style.left = x + "px";
+    dragingPeice.style.top = y + "px";
+}
 
 document.getElementsByTagName("BODY")[0].onresize = function () {
 
