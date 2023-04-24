@@ -42,9 +42,9 @@ var square_p = function (square, index) {
     this.id = square;
     this.ocupied = false;
     this.pieceId = undefined;
-    this.id.onclick = function () {
-        makeMove(index);
-    }
+    // this.id.onclick = function () {
+    //     makeMove(index);
+    // }
 }
 
 var checker = function (piece, color, square) {
@@ -62,9 +62,9 @@ var checker = function (piece, color, square) {
         this.coordX = 8;
         this.coordY = square / 8;
     }
-    this.id.onclick = function () {
-        showMoves(piece);
-    }
+    //this.id.onclick = function () {
+    //    showMoves(piece);            commneted out becouse showMoves not yet defined yet
+    //}
 }
 
 checker.prototype.setCoord = function (X, Y) {
@@ -156,22 +156,35 @@ function getDimension() {
         || document.body.clientWidth;
 }
 
+var dragingPeice = null;//equal to the peice that user is currently dragging
 
-function makeMovable(id){ //this function needs to run once to make an object movable
-    console.log("entred function makeMovable");
-    var checker = document.getElementById(id);
-    checker.style.position = "absolute"; //I beleave this makes the position an absolute x,y value
-    checker.onmousedown = function(){ //this adds a finction that happnes when peice is clicked
-        dragingPeice = checker;//the peice that is currently being dragged
+function makeMovable(idList){ //this function needs to run once to make an object movable
+    console.log(idList);
+    let id;
+    for(let i=0; i<idList.length; i++){
+        id = idList[i];
+        console.log(id);
+        let checker = document.getElementById(id);
+        checker.style.position = "absolute"; //I beleave this makes the position an absolute x,y value
+        checker.onmousedown = function(){ //this adds a finction that happnes when peice is clicked
+            console.log(checker.id);
+            dragingPeice = checker;//the peice that is currently being dragged
+        }
     }
 }
 
-document.onmousemove = function(e){//function runs whenever mouse moves
-    var x = e.pageX;
-    var y = e.pageY;
+document.onmouseup = function(e){
+    dragingPeice = null;
+}
 
-    dragingPeice.style.left = x + "px";
-    dragingPeice.style.top = y + "px";
+document.onmousemove = function(e){//function runs whenever mouse moves
+    if(dragingPeice != null){
+        var x = e.pageX;
+        var y = e.pageY;
+
+        dragingPeice.style.left = x + "px";
+        dragingPeice.style.top = y + "px";
+    }
 }
 
 document.getElementsByTagName("BODY")[0].onresize = function () {
