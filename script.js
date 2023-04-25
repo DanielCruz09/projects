@@ -182,8 +182,8 @@ document.onmousemove = function(e){//function runs whenever mouse moves
         var x = e.pageX;
         var y = e.pageY;
 
-        dragingPeice.style.left = x + "px";
-        dragingPeice.style.top = y + "px";
+        dragingPeice.style.left = (x-85) + "px";
+        dragingPeice.style.top = (y-50) + "px";
     }
 }
 
