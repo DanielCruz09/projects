@@ -39,7 +39,7 @@ else {
 
 
 var square_p = function (square, index) {
-    this.id = square;
+    console.log(this.id);
     this.ocupied = false;
     this.pieceId = undefined;
     // this.id.onclick = function () {
@@ -80,11 +80,11 @@ checker.prototype.changeCoord = function (X, Y) {
 }
 
 checker.prototype.checkIfKing = function () {
-    if (this.coordY == 8 && !this.king && this.color == "white") {
+    if (this.coordY === 8 && !this.king && this.color === "white") {
         this.king = true;
         this.id.style.border = "4px solid #FFFF00";
     }
-    if (this.coordY == 1 && !this.king && this.color == "black") {
+    if (this.coordY === 1 && !this.king && this.color === "black") {
         this.king = true;
         this.id.style.border = "4px solid #FFFF00";
     }
@@ -141,10 +141,11 @@ for (var i = 9; i <= 12; i++) {
     block[24 + 2 * i].pieceId = b_checker[i];
 }
 
-
+console.log(block);
 the_checker = w_checker;
 
-
+var xofset;
+var yofset;
 
 function getDimension() {
     contor++;
@@ -158,22 +159,46 @@ function getDimension() {
 
 var dragingPeice = null;//equal to the peice that user is currently dragging
 
+function inSquair(x, y){//If element is in a squair, returns that squair. oatherwise returns false.
+    let currSquair;
+    for(let i=1;i<=64;i++){
+        currSquair = document.getElementById("SQ" + i);
+        squairLocation = currSquair.getBoundingClientRect();
+        if(((x > squairLocation.left)&&(x < squairLocation.right))&&((y > squairLocation.top)&&(y < squairLocation.bottom))){
+            console.log("placed in sq");
+            console.log(currSquair.id);
+            return currSquair;
+        }
+    }
+    console.log("no match found")
+    return false;
+}
+
+
 function makeMovable(idList){ //this function needs to run once to make an object movable
-    console.log(idList);
     let id;
     for(let i=0; i<idList.length; i++){
         id = idList[i];
-        console.log(id);
         let checker = document.getElementById(id);
         checker.style.position = "absolute"; //I beleave this makes the position an absolute x,y value
         checker.onmousedown = function(){ //this adds a finction that happnes when peice is clicked
-            console.log(checker.id);
             dragingPeice = checker;//the peice that is currently being dragged
         }
     }
 }
 
-document.onmouseup = function(e){
+document.onmouseup = function(e){//when you relese your mouse, stop dragging
+    // let currpeice = dragingPeice;
+    // dragingPeice = null;
+    // let x = e.pageX;
+    // let y = e.pageY;
+    // let endingSquair = inSquair(x, y);
+    // if(endingSquair != false){
+    //     //console.log(endingSquair.id);
+    //     currpeice.style.left = endingSquair.getBoundingClientRect().left + "px";
+    //     currpeice.style.top = endingSquair.getBoundingClientRect().top + "px";
+    // }
+
     dragingPeice = null;
 }
 
@@ -181,11 +206,15 @@ document.onmousemove = function(e){//function runs whenever mouse moves
     if(dragingPeice != null){
         var x = e.pageX;
         var y = e.pageY;
-
-        dragingPeice.style.left = (x-85) + "px";
-        dragingPeice.style.top = (y-50) + "px";
+        xofset = document.getElementById("SQ1").getBoundingClientRect().left;
+        yofset = document.getElementById("SQ1").getBoundingClientRect().top;   
+        dragingPeice.style.left = (x - xofset - 27) + "px";
+        dragingPeice.style.top = (y - yofset - 27) + "px";
     }
 }
+
+
+
 
 document.getElementsByTagName("BODY")[0].onresize = function () {
 
@@ -195,12 +224,12 @@ document.getElementsByTagName("BODY")[0].onresize = function () {
     if (windowWidth < 650) {
         moveLength = 50;
         moveDeviation = 6;
-        if (bigScreen == 1) bigScreen = -1;
+        if (bigScreen === 1) bigScreen = -1;
     }
     if (windowWidth > 650) {
         moveLength = 80;
         moveDeviation = 10;
-        if (bigScreen == -1) bigScreen = 1;
+        if (bigScreen === -1) bigScreen = 1;
     }
 
     if (bigScreen != cpy_bigScreen) {
