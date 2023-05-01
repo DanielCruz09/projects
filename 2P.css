@@ -145,8 +145,8 @@ html {
 
 @media only screen and (max-width : 640px) {
     .table {
-        width: 400px;
-        height: 400px;
+        width: 640px;
+        height: 640px;
     }
 
     .square {

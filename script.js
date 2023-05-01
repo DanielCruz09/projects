@@ -39,7 +39,6 @@ else {
 
 
 var square_p = function (square, index) {
-    console.log(this.id);
     this.ocupied = false;
     this.pieceId = undefined;
     // this.id.onclick = function () {
@@ -141,11 +140,39 @@ for (var i = 9; i <= 12; i++) {
     block[24 + 2 * i].pieceId = b_checker[i];
 }
 
-console.log(block);
+var currBord = [[],[],[],[],[],[],[],[]];//list contains the board with cowardnits x0-7, y0-7
+for(var i=0; i<8; i++){
+    for(var j=0; j<8; j++){
+        sq = document.getElementById("SQ" + (i*8+j+1));
+        sq.X = j;
+        sq.Y = i;
+        currBord[j][i] = sq;
+    }
+
+}
+var checkerNumber = 1;//not used after for loop
+for(var i=0; i<3; i++){
+    for(var j=0; j<4; j++){
+        document.getElementById("W" + checkerNumber).king = false;
+        document.getElementById("B" + checkerNumber).king = false;
+        currBord[j*2+(i%2)][i].peice = document.getElementById("W" + checkerNumber);
+        document.getElementById("W" + checkerNumber).X = j*2+(i%2);
+        document.getElementById("W" + checkerNumber).Y = i;
+        currBord[j*2+((i+1)%2)][i+5].peice = document.getElementById("B" + checkerNumber);
+        document.getElementById("B" + checkerNumber).X = j*2+((i+1)%2);
+        document.getElementById("B" + checkerNumber).Y = i+5;
+        checkerNumber++
+    }
+}
+
+
 the_checker = w_checker;
 
-var xofset;
-var yofset;
+var xofset = document.getElementById("SQ1").getBoundingClientRect().left; //these are the distence from the edge of screen to the board
+var yofset = document.getElementById("SQ1").getBoundingClientRect().top;
+var moveList = [];//this is a list of the moves that the player wants to make. sence multable moves happen durring a jump, this 
+//is cumulitive
+var currTurn = "Black";
 
 function getDimension() {
     contor++;
@@ -159,19 +186,15 @@ function getDimension() {
 
 var dragingPeice = null;//equal to the peice that user is currently dragging
 
-function inSquair(x, y){//If element is in a squair, returns that squair. oatherwise returns false.
-    let currSquair;
-    for(let i=1;i<=64;i++){
-        currSquair = document.getElementById("SQ" + i);
-        squairLocation = currSquair.getBoundingClientRect();
-        if(((x > squairLocation.left)&&(x < squairLocation.right))&&((y > squairLocation.top)&&(y < squairLocation.bottom))){
-            console.log("placed in sq");
-            console.log(currSquair.id);
-            return currSquair;
-        }
+function inSquair(x, y,){//If element is in a squair, returns that squair. oatherwise returns false.
+    
+    if(((x > xofset) &&(x < xofset+640))&&((y > yofset)&&(y < yofset+640))){
+        let idNumber = (((x - xofset) - (x - xofset)%80)/80) + ((((y - yofset) - (y - yofset)%80)/80)*8) + 1;
+        return idNumber;
     }
-    console.log("no match found")
-    return false;
+    else{
+        return false;
+    }
 }
 
 
@@ -188,16 +211,16 @@ function makeMovable(idList){ //this function needs to run once to make an objec
 }
 
 document.onmouseup = function(e){//when you relese your mouse, stop dragging
-    // let currpeice = dragingPeice;
-    // dragingPeice = null;
-    // let x = e.pageX;
-    // let y = e.pageY;
-    // let endingSquair = inSquair(x, y);
-    // if(endingSquair != false){
-    //     //console.log(endingSquair.id);
-    //     currpeice.style.left = endingSquair.getBoundingClientRect().left + "px";
-    //     currpeice.style.top = endingSquair.getBoundingClientRect().top + "px";
-    // }
+     let currpeice = dragingPeice;
+     dragingPeice = null;
+     let x = e.pageX;
+     let y = e.pageY;
+     let endingSquair = inSquair(x, y);
+    if(endingSquair != false){
+        currpeice.style.left = ((((endingSquair-1)%8) * 80)+8) + "px"; //move peice to center of SQ 
+        currpeice.style.top = ((((endingSquair - ((endingSquair-1)%8))/8)*80)) + "px";
+        moveList.push({peice:currpeice, to:endingSquair, toX: (endingSquair-1)%8, toY: ((endingSquair - ((endingSquair)%8))/8)});
+    }
 
     dragingPeice = null;
 }
@@ -206,14 +229,136 @@ document.onmousemove = function(e){//function runs whenever mouse moves
     if(dragingPeice != null){
         var x = e.pageX;
         var y = e.pageY;
-        xofset = document.getElementById("SQ1").getBoundingClientRect().left;
-        yofset = document.getElementById("SQ1").getBoundingClientRect().top;   
         dragingPeice.style.left = (x - xofset - 27) + "px";
         dragingPeice.style.top = (y - yofset - 27) + "px";
     }
 }
 
+function makeAMove(){
+    if(moveList.length == 0){
+        return;
+    }
+    else{
+        if(moveList.length == 1){
+            let oneMove = moveList[0];
+            if(currTurn == "Black"){
+                if(oneMove.peice.id[0] == "B"){
+                    if(oneMove.peice.isKing){
+                        if((oneMove.toX == oneMove.peice.X+1 || oneMove.peice.X-1 == oneMove.toX)&&(oneMove.toY==oneMove.peice.Y+1||oneMove.toY == oneMove.peice.Y-1)){
+                            if(currBord[oneMove.toX][oneMode.toY].peice == null){
+                                console.log("move made King black");
+                                currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                oneMove.peice.X = oneMove.toX;
+                                oneMove.peice.Y = oneMove.toY;
+                                currTurn = "White";
+                                moveList = [];
+                            }
+                            else{
+                                console.log("trued to move to an occupied space");
+                            }
+                            
+                            
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else{
+                        if((oneMove.toX==oneMove.peice.X+1 || oneMove.peice.X -1==oneMove.toX)&&(oneMove.toY == oneMove.peice.Y-1)){
+                            if(currBord[oneMove.toX][oneMove.toY].peice == null){
+                                console.log("made move black non-king");
+                                currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                if(oneMove.toY == 0){
+                                    peice.isKing = true;//here add the code for making a peice a king
+                                }
+                                oneMove.peice.X = oneMove.toX;
+                                oneMove.peice.Y = oneMove.toY;
+                                currTurn = "White";
+                                moveList = [];
+                            }
+                            else{
+                                console.log("trued to move to an occupied squair");
+                            }
 
+                        }
+                        else{
+                            console.log("move not legal");
+                            return;
+                        }
+                    }
+                }
+                else{
+                    return;
+                }
+            }
+            else if(currTurn == "White"){
+                if(oneMove.peice.id[0] == "W"){
+                    if(oneMove.peice.isKing){
+                        if((oneMove.toX==oneMove.peice.X+1 || oneMove.peice.X -1==oneMove.toX)&&(oneMove.toY==oneMove.peice.Y+1||oneMove.toY == oneMove.peice.Y-1)){
+                            if(currBord[oneMove.toX][oneMove.toY].peice == null){
+                                //scussesfully made move
+                                currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                oneMove.peice.X = oneMove.toX;
+                                oneMove.peice.Y = oneMove.toY;
+                                currTurn = "Black";
+                                moveList = [];
+                                console.log("made move King wight");
+                            }
+                            else{
+                                console.log("trued to move to occupied space");
+                                return;
+                            }
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else{
+                        if((oneMove.toX==oneMove.peice.X+1 || oneMove.toX==oneMove.peice.X-1)&&(oneMove.toY==oneMove.peice.Y+1)){
+                            if(currBord[oneMove.toX][oneMove.toY].peice == null){
+                                //scussesfull, to do
+                                console.log("made move non-king wight");
+                                currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                if(oneMove.toY == 7){
+                                    peice.isKing = true;//here add the code for making a peice a king
+                                }
+                                oneMove.peice.X = oneMove.toX;
+                                oneMove.peice.Y = oneMove.toY;
+                                moveList = [];
+                                currTurn = "Black";
+                            }
+                            else{
+                                console.log("moved to an occupied squair");
+                                return;
+                            }
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                }
+                else{
+                    return;
+                }
+            }
+            else{
+                console.log("Impossable state reached 2");
+            }
+        }
+        else{
+            if(moveList.length > 1){
+                console.log("move length>1");
+            }
+            else{
+                console.log("Impossable state reached 1");
+            }
+        }
+    }
+}
 
 
 document.getElementsByTagName("BODY")[0].onresize = function () {
