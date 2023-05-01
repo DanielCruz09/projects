@@ -34,6 +34,20 @@ class Tree {
                 if (currNode.left == null) currNode.left = nnode;
                 else currNode = currNode.left; 
             }
+            while (nnode.value > currNode.value) {
+                if (currNode.right == null) currNode.right = nnode;
+                else currNode = currNode.right;
+            }
+        }
+    }
+    
+    findNode(value) {
+        let currNode = this.root;
+        while (true) {
+            if (value < currNode.value) currNode = currNode.left;
+            if (value > currNode.value) currNode = currNode.right;
+            if (value == currNode.value) return currNode.value;
+            if (currNode.left == null || currNode.right == null) return null;
         }
     }
 }
@@ -41,6 +55,7 @@ class Tree {
 
 function MonteCarloTreeSearch(root) { // root is the current game state
     var MCT = new Tree();
+    MCT.addNode(root);
     var player1 = document.getElementsByClassName("white_checker");
     var player2 = document.getElementsByClassName("black_checker");
 }
