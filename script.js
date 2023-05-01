@@ -241,11 +241,11 @@ function makeAMove(){
     else{
         if(moveList.length == 1){
             let oneMove = moveList[0];
-            if(currTurn == "Black"){
-                if(oneMove.peice.id[0] == "B"){
-                    if(oneMove.peice.isKing){
-                        if((oneMove.toX == oneMove.peice.X+1 || oneMove.peice.X-1 == oneMove.toX)&&(oneMove.toY==oneMove.peice.Y+1||oneMove.toY == oneMove.peice.Y-1)){
-                            if(currBord[oneMove.toX][oneMode.toY].peice == null){
+            if(currBord[oneMove.toX][oneMove.toY].peice == null){
+                if(currTurn == "Black"){
+                    if(oneMove.peice.id[0] == "B"){
+                        if(oneMove.peice.isKing){
+                            if((oneMove.toX == oneMove.peice.X+1 || oneMove.peice.X-1 == oneMove.toX)&&(oneMove.toY==oneMove.peice.Y+1||oneMove.toY == oneMove.peice.Y-1)){
                                 console.log("move made King black");
                                 currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                 currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -253,20 +253,67 @@ function makeAMove(){
                                 oneMove.peice.Y = oneMove.toY;
                                 currTurn = "White";
                                 moveList = [];
+                                
+                                
                             }
                             else{
-                                console.log("trued to move to an occupied space");
+                                if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice.id[0] == "W"))){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice;
+                                    currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "White";
+                                    moveList = [];
+    
+                                }
+                                else if((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice.id[0] == "W")){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice;
+                                    currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "White";
+                                    moveList = [];
+
+                                }
+                                else if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice.id[0] == "W"))){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice;
+                                    currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "White";
+                                    moveList = [];
+
+                                }
+                                else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice.id[0] == "W"))){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice;
+                                    currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "White";
+                                    moveList = [];
+
+                                }
+                                else{
+                                    console.log("move not vallid");
+                                    return;
+                                }
+                    
                             }
-                            
-                            
                         }
                         else{
-                            return;
-                        }
-                    }
-                    else{
-                        if((oneMove.toX==oneMove.peice.X+1 || oneMove.peice.X -1==oneMove.toX)&&(oneMove.toY == oneMove.peice.Y-1)){
-                            if(currBord[oneMove.toX][oneMove.toY].peice == null){
+                            if((oneMove.toX==oneMove.peice.X+1 || oneMove.peice.X -1==oneMove.toX)&&(oneMove.toY == oneMove.peice.Y-1)){
                                 console.log("made move black non-king");
                                 currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                 currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -277,27 +324,54 @@ function makeAMove(){
                                 oneMove.peice.Y = oneMove.toY;
                                 currTurn = "White";
                                 moveList = [];
+
                             }
                             else{
-                                console.log("trued to move to an occupied squair");
-                            }
+                                console.log("checking for jump");
+                                if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice.id[0] == "W"))){
+                                    console.log("jumped left");
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.toX-1][oneMove.toY+1].peice;
+                                    currBord[oneMove.toX-1][oneMove.toY+1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = "none";
+                                    currTurn = "White";
+                                    moveList = [];
+    
+                                }
+                                else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice.id[0] == "W"))){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice;
+                                    currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "White";
+                                    moveList = [];
 
-                        }
-                        else{
-                            console.log("move not legal");
-                            return;
+                                }
+                                else{
+                                    console.log("move not vallid");
+                                    return;
+                                }
+
+
+
+                            }
                         }
                     }
+                    else{
+                        return;
+                    }
                 }
-                else{
-                    return;
-                }
-            }
-            else if(currTurn == "White"){
-                if(oneMove.peice.id[0] == "W"){
-                    if(oneMove.peice.isKing){
-                        if((oneMove.toX==oneMove.peice.X+1 || oneMove.peice.X -1==oneMove.toX)&&(oneMove.toY==oneMove.peice.Y+1||oneMove.toY == oneMove.peice.Y-1)){
-                            if(currBord[oneMove.toX][oneMove.toY].peice == null){
+                else if(currTurn == "White"){
+                    if(oneMove.peice.id[0] == "W"){
+                        if(oneMove.peice.isKing){
+                            if((oneMove.toX==oneMove.peice.X+1 || oneMove.peice.X -1==oneMove.toX)&&(oneMove.toY==oneMove.peice.Y+1||oneMove.toY == oneMove.peice.Y-1)){
+                                
                                 //scussesfully made move
                                 currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                 currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -306,19 +380,67 @@ function makeAMove(){
                                 currTurn = "Black";
                                 moveList = [];
                                 console.log("made move King wight");
+                                
                             }
                             else{
-                                console.log("trued to move to occupied space");
-                                return;
+                                if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice.id[0] == "B"))){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice;
+                                    currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "Black";
+                                    moveList = [];
+    
+                                }
+                                else if((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice.id[0] == "B")){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice;
+                                    currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "Black";
+                                    moveList = [];
+
+                                }
+                                else if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice.id[0] == "B"))){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice;
+                                    currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "Black";
+                                    moveList = [];
+
+                                }
+                                else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice.id[0] == "B"))){
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice;
+                                    currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "Black";
+                                    moveList = [];
+
+                                }
+                                else{
+                                    console.log("move not vallid");
+                                    return;
+                                }
+                    
+
                             }
                         }
                         else{
-                            return;
-                        }
-                    }
-                    else{
-                        if((oneMove.toX==oneMove.peice.X+1 || oneMove.toX==oneMove.peice.X-1)&&(oneMove.toY==oneMove.peice.Y+1)){
-                            if(currBord[oneMove.toX][oneMove.toY].peice == null){
+                            if((oneMove.toX==oneMove.peice.X+1 || oneMove.toX==oneMove.peice.X-1)&&(oneMove.toY==oneMove.peice.Y+1)){
                                 //scussesfull, to do
                                 console.log("made move non-king wight");
                                 currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
@@ -332,21 +454,48 @@ function makeAMove(){
                                 currTurn = "Black";
                             }
                             else{
-                                console.log("moved to an occupied squair");
-                                return;
+                                console.log("checking for jumping whight peice");
+                                if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice.id[0] == "B"))){
+                                    console.log("whight took to the right");
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice;
+                                    currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "Black";
+                                    moveList = [];
+    
+                                }
+                                else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice.id[0] == "B"))){
+                                    console.log("white took to left");
+                                    currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
+                                    currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
+                                    takenPice = currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice;
+                                    currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice = null;
+                                    oneMove.peice.X = oneMove.toX;
+                                    oneMove.peice.Y = oneMove.toY;
+                                    takenPice.style.display = 'none';
+                                    currTurn = "Black";
+                                    moveList = [];
+
+                                }
+                                else{
+                                    console.log("move not vallid");
+                                    return;
+                                }
                             }
                         }
-                        else{
-                            return;
-                        }
                     }
-                }
-                else{
-                    return;
+                    else{
+                        console.log("its not your turn");
+                    }
                 }
             }
             else{
-                console.log("Impossable state reached 2");
+                console.log("squair occupied");
+                return;
             }
         }
         else{
