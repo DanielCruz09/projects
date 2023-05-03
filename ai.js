@@ -25,7 +25,7 @@ class Tree {
     constructor(gameBoard, turn) {
         this.root = null;
         this.gameBoard = gameBoard;
-        this.turn = turn;
+        this.turn = turn; // 1 if player's turn, 0 otherwise
     }
 
     addNode(value) {
@@ -63,13 +63,58 @@ class Tree {
     }
 
     allowedMoves() {
-        let state = currBord;
-        let moves = [];
+        let board = currBord;
+        const moves = {}; // key = position of a piece, value = possible positions for that piece
         for (let i=0; i<8; i++) {
             for (let j=0; j<8; j++) {
-                var checker = state[i][j];
-                if (checker * this.turn > 0) {
-                    // TODO
+                var checker = board[i][j];
+                if (checker * this.turn == 0) {
+                    // TODO: get possible directions for each checker
+                    if (i == 0) {
+                        let southeast = board[i+1][j+1];
+                        let directions = [];
+                        directions.push(southeast);
+                        if (j == 0) {
+                            moves.board[i][j] = directions;
+                            continue;
+                        }
+                        let southwest = board[i-1][j+1];
+                        directions.push(southwest);
+                        moves.board[i][j] = directions;
+                    }
+                    else if (i == 7) {
+                        let southwest = board[i-1][j+1];
+                        moves.board[i][j] = southwest;
+                        if (j == 0) continue;
+                        let northwest = board[i-1][j-1];
+                        moves.board[i][j] = northwest;
+                        continue;
+                    }
+                    else if (j == 7) {
+                        let northeast = board[i+1][j-1];
+                        moves.board[i][j] = northeast;
+                        if (i == 0) continue;
+                        let northwest = board[i-1][j-1];
+                        moves.board[i][j] = northwest;
+                        continue;
+                    }
+                    else if (i == 7 & j == 7) {
+                        let northwest = board[i-1][j-1];
+                        moves.board[i][j] = northwest;
+                        continue;
+                    }
+                    else {
+                        let northwest = board[i-1][j-1];
+                        let northeast = board[i+1][j-1];
+                        let southwest = board[i-1][j+1];
+                        let southeast = board[i+1][j+1];
+                        let directions = [];
+                        directions.push(northwest);
+                        directions.push(northeast);
+                        directions.push(southwest);
+                        directions.push(southeast);
+                        moves.board[i][j] = directions;
+                    }
                 }
             }
         }
