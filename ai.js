@@ -10,16 +10,22 @@ MCTS algorithm:
 */
 
 class Node {
-    constructor(value) {
-        this.value = value;
+    constructor(state, move) {
         this.left = null;
         this.right = null;
+        this.state = state;
+        this.move = move;
+        this.nextMoves = [];
+        this.numWins = 0;
+        this.iterations = 0;
     }
 }
 
 class Tree {
-    constructor() {
+    constructor(gameBoard, turn) {
         this.root = null;
+        this.gameBoard = gameBoard;
+        this.turn = turn;
     }
 
     addNode(value) {
@@ -50,12 +56,42 @@ class Tree {
             if (currNode.left == null || currNode.right == null) return null;
         }
     }
+
+    Move(move) {
+        move = makeAMove();
+        return move;
+    }
+
+    allowedMoves() {
+        let state = currBord;
+        let moves = [];
+        for (let i=0; i<8; i++) {
+            for (let j=0; j<8; j++) {
+                var checker = state[i][j];
+                if (checker * this.turn > 0) {
+                    // TODO
+                }
+            }
+        }
+    }
+
+    update() {
+        return currBord;
+    }
+
+    simulation() {
+        let state = new Tree(currBord, null); // copy of game state
+        while (!gameOver) {
+            let moves = state.allowedMoves();
+            const randomMove = moves[Math.floor(Math.random() * moves.length)];
+        }
+    }
 }
 
 
-function MonteCarloTreeSearch(root) { // root is the current game state
+function MonteCarloTreeSearch(currState) { // root is the current game state
     var MCT = new Tree();
+    const root = new Node(currState, null);
     MCT.addNode(root);
-    var player1 = document.getElementsByClassName("white_checker");
-    var player2 = document.getElementsByClassName("black_checker");
+    
 }
