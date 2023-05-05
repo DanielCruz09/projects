@@ -234,6 +234,9 @@ document.onmousemove = function(e){//function runs whenever mouse moves
     }
 }
 
+
+//runs when the move button is pressed, 
+//if move is valid, updates peice.x, peice.y the currbord, takes taken peices, and makes peice a king if nessesary
 function makeAMove(){
     if(moveList.length == 0){
         return;
@@ -545,27 +548,65 @@ function makeAMove(){
                         }
                         else{
                             if(movingColor == "White"){
-                                if((preMoveX==postMoveX-2) && (preMoveY==postMoveY-2) && (currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0])){
-                                    peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
-                                    if(postMoveY == 7){
-                                        madeKing = true;
-                                        peiceMoved.isKing = true;
+                                if(preMoveY+2==postMoveY && preMoveX-2==postMoveX){
+                                    if(currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0]){
+                                        peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
+                                        if(postMoveY == 7){
+                                            madeKing = true;
+                                            peiceMoved.isKing = true;
+                                        }
                                     }
+                                    else{
+                                        console.log("invalid move, no peice to take");
+                                        moveValid = false;                                    }
                                 }
-                                else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY+2) && (currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0])){
-                                    peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
-                                    if(postMoveY == 0){
-                                        madeKing = true;
-                                        peiceMoved.isKing = true;
+                                else if((preMoveY+2==postMoveY)&&(preMoveX+2 == postMoveX)){
+                                    if(currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0]){
+                                        peicesTaken[i] = currBord[preMoveX+1][preMoveY+1].peice;
+                                        if(postMoveY == 7){
+                                            madeKing = true;
+                                            peiceMoved.isKing = true;
+                                        }
                                     }
+                                    else{
+                                        console.log("invalid move, no peice to take");
+                                        moveValid = false;                                    }
                                 }
                                 else{
-                                    moveValid = false
+                                    moveValid = false;
                                 }
     
                             }
                             else if(movingColor == "Black"){
-
+                                if(preMoveY-2==postMoveY && preMoveX-2==postMoveX){
+                                    if(currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0]){
+                                        peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
+                                        if(postMoveY == 7){
+                                            madeKing = true;
+                                            peiceMoved.isKing = true;
+                                        }
+                                    }
+                                    else{
+                                        console.log("invalid move, no peice to take");
+                                        moveValid = false;                                    }
+                                }
+                                else if((preMoveY-2==postMoveY)&&(preMoveX+2 == postMoveX)){
+                                    if(currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0]){
+                                        peicesTaken[i] = currBord[preMoveX+1][preMoveY-1].peice;
+                                        if(postMoveY == 0){
+                                            madeKing = true;
+                                            peiceMoved.isKing = true;
+                                        }
+                                    }
+                                    else{
+                                        console.log("invalid move, no peice to take");
+                                        moveValid = false;                                    
+                                    }
+                                }
+                                else{
+                                    console.log("you cannot go there");
+                                    moveValid = false;
+                                }
                             }
                         }
                     }
@@ -578,8 +619,18 @@ function makeAMove(){
                     for(let j=0; j<peicesTaken.length;j++){
                         peiceTaken = peicesTaken[j];
                         peiceTaken.style.display = 'none';
-                        currTurn = notMovingColor;
+                        currBord[peiceTaken.X][peiceTaken.Y].peice = null;
                     }
+                    currBord[peiceMoved.X][peiceMoved.Y].peice = null;
+                    currBord[postMoveX][postMoveY].peice = peiceMoved;
+                    console.log("debugging info");
+                    console.log(currTurn);
+                    currTurn = notMovingColor;
+                    console.log(notMovingColor);
+                    console.log(movingColor);
+                    peiceMoved.X = postMoveX;
+                    peiceMoved.Y = postMoveY;
+            
                     console.log("jumped multable peices");
                     return;
                 }
