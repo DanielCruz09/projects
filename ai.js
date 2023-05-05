@@ -1,13 +1,18 @@
 // // This file contains the functions that determine the actions of the AI
 
+var checker = function(piece, color) {
+    this.piece = piece;
+    this.color = color;
+    this.king = false;
+}
 
-function isEmpty(pos) {
+checker.prototype.isEmpty = function(pos) {
     let sq = document.getElementById("SQ" + pos);
     if (sq == null) return true;
     return false;
 }
 
-function getAllowedMoves(turn) {
+checker.prototype.getAllowedMoves = function () {
         let board = currBord;
         const moves = {}; // key = position of a piece, value = array of possible positions for that piece
         for (let i=0; i<8; i++) {
@@ -17,7 +22,7 @@ function getAllowedMoves(turn) {
                 var northwest = board[i-1][j-1];
                 var northeast = board[i+1][j-1];
                 var directions = [];
-                if (turn == 0 & isEmpty(i+1+j+1) & isEmpty(i-1+j+1) & isEmpty(i-1+j-1) & isEmpty(i+1+j-1)) {
+                if (this.color == "black" & isEmpty(i+1+j+1) & isEmpty(i-1+j+1) & isEmpty(i-1+j-1) & isEmpty(i+1+j-1)) {
                     if (i == 0) {
                         directions.push(southeast);
                         if (j == 0) {
@@ -63,7 +68,7 @@ function getAllowedMoves(turn) {
         return moves;
     }
 
-function move() {
+checker.prototype.move = function () {
     // TODO
 }
 
