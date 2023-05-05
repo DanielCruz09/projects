@@ -10,16 +10,22 @@ MCTS algorithm:
 */
 
 class Node {
-    constructor(value) {
-        this.value = value;
+    constructor(state, move) {
         this.left = null;
         this.right = null;
+        this.state = state;
+        this.move = move;
+        this.nextMoves = [];
+        this.numWins = 0;
+        this.iterations = 0;
     }
 }
 
 class Tree {
-    constructor() {
+    constructor(gameBoard, turn) {
         this.root = null;
+        this.gameBoard = gameBoard;
+        this.turn = turn; // 1 if player's turn, 0 otherwise
     }
 
     addNode(value) {
@@ -50,12 +56,97 @@ class Tree {
             if (currNode.left == null || currNode.right == null) return null;
         }
     }
+
+    Move(move) {
+        move = makeAMove();
+        return move;
+    }
+
+    allowedMoves() {
+        let board = currBord;
+        const moves = {}; // key = position of a piece, value = array of possible positions for that piece
+        for (let i=0; i<8; i++) {
+            for (let j=0; j<8; j++) {
+                var checker = board[i][j];
+                if (this.turn == 0) {
+                    if (i == 0) {
+                        let southeast = board[i+1][j+1];
+                        let directions = [];
+                        directions.push(southeast);
+                        if (j == 0) {
+                            moves.board[i][j] = directions;
+                            continue;
+                        }
+                        let southwest = board[i-1][j+1];
+                        directions.push(southwest);
+                        moves.board[i][j] = directions;
+                    }
+                    else if (i == 7) {
+                        let southwest = board[i-1][j+1];
+                        let directions = [];
+                        directions.push(southwest);
+                        if (j == 0) {
+                            moves.board[i][j] = directions;
+                            continue;
+                        }
+                        let northwest = board[i-1][j-1];
+                        directions.push(northwest);
+                        moves.board[i][j] = directions;
+                    }
+                    else if (j == 7) {
+                        let northeast = board[i+1][j-1];
+                        let directions = [];
+                        directions.push(northeast);
+                        
+                        if (i == 0) {
+                            moves.board[i][j] = directions;
+                            continue;
+                        }
+                        let northwest = board[i-1][j-1];
+                        directions.push(northwest);
+                        moves.board[i][j] = directions;
+                    }
+                    else if (i == 7 & j == 7) {
+                        let northwest = board[i-1][j-1];
+                        let directions = [];
+                        directions.push(northwest);
+                        moves.board[i][j] = directions;
+                    }
+                    else {
+                        let northwest = board[i-1][j-1];
+                        let northeast = board[i+1][j-1];
+                        let southwest = board[i-1][j+1];
+                        let southeast = board[i+1][j+1];
+                        let directions = [];
+                        directions.push(northwest);
+                        directions.push(northeast);
+                        directions.push(southwest);
+                        directions.push(southeast);
+                        moves.board[i][j] = directions;
+                    }
+                }
+            }
+        }
+        return moves;
+    }
+
+    update() {
+        return currBord;
+    }
+
+    simulation() {
+        let state = new Tree(currBord, null); // copy of game state
+        while (!gameOver) {
+            let moves = state.allowedMoves();
+            const randomMove = moves[Math.floor(Math.random() * moves.length)];
+        }
+    }
 }
 
 
-function MonteCarloTreeSearch(root) { // root is the current game state
+function MonteCarloTreeSearch(currState) { // root is the current game state
     var MCT = new Tree();
+    const root = new Node(currState, null);
     MCT.addNode(root);
-    var player1 = document.getElementsByClassName("white_checker");
-    var player2 = document.getElementsByClassName("black_checker");
+    
 }
