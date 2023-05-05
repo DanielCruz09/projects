@@ -500,10 +500,118 @@ function makeAMove(){
         }
         else{
             if(moveList.length > 1){
-                console.log("move length>1");
+                peiceMoved = moveList[0].peice;
+                postMoveX = peiceMoved.X;
+                postMoveY = peiceMoved.Y;
+                movingColor = peiceMoved.id[0];
+                if(movingColor == 'W'){
+                    movingColor = "White";
+                    notMovingColor = "Black";
+                }
+                else if(movingColor == 'B'){
+                    movingColor = "Black";
+                    notMovingColor = "White";
+                }
+                if(movingColor != currTurn){
+                    console.log("Its not your turn");
+                    return;
+                }
+                madeKing = false;
+                moveValid = true;
+                peicesTaken = [];
+                for(let i=0; (i<moveList.length)&&moveValid; i++){
+                    move = moveList[i];
+                    if(move.peice.id == peiceMoved.id){
+                        preMoveX = postMoveX;
+                        preMoveY = postMoveY;
+                        postMoveX = move.toX;
+                        postMoveY = move.toY;
+                        if(peiceMoved.isKing){
+                            if((preMoveX==postMoveX+2) && (preMoveY==postMoveY+2) && (currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0])){
+                                peicesTaken[i] = currBord[preMoveX+1][preMoveY+1].peice;
+                            }
+                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY+2) && (currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0])){
+                                peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
+                            }
+                            else if((preMoveX==postMoveX+2) && (preMoveY==postMoveY-2) && (currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0])){
+                                peicesTaken[i] = currBord[preMoveX+1][preMoveY-1].peice;
+                            }
+                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY-2) && (currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0])){
+                                peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
+                            }
+                            else{
+                                moveValid = false
+                            }
+                        }
+                        else{
+                            if(movingColor == "White"){
+                                if((preMoveX==postMoveX-2) && (preMoveY==postMoveY-2) && (currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0])){
+                                    peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
+                                    if(postMoveY == 7){
+                                        madeKing = true;
+                                        peiceMoved.isKing = true;
+                                    }
+                                }
+                                else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY+2) && (currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0])){
+                                    peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
+                                    if(postMoveY == 0){
+                                        madeKing = true;
+                                        peiceMoved.isKing = true;
+                                    }
+                                }
+                                else{
+                                    moveValid = false
+                                }
+    
+                            }
+                            else if(movingColor == "Black"){
+
+                            }
+                        }
+                    }
+                    else{
+                        console.log("tried moving multable peices in one turn");
+                        moveValid = false;
+                    }
+                }
+                if(moveValid){
+                    for(let j=0; j<peicesTaken.length;j++){
+                        peiceTaken = peicesTaken[j];
+                        peiceTaken.style.display = 'none';
+                        currTurn = notMovingColor;
+                    }
+                    console.log("jumped multable peices");
+                    return;
+                }
+                else{
+                    if(madeKing){
+                        peiceMoved.isKing = false;
+                    }
+                    console.log("move made was not a vallid Move");
+                    return;
+                }
             }
             else{
                 console.log("Impossable state reached 1");
+            }
+        }
+    }
+}
+
+function resetMove(){
+    moveList = [];
+    let currPeice = null;
+    let currSpace = null;
+    let spaceID = null;
+    for(let xval=0; xval<8; xval++){
+        for(let yval=0;yval<8; yval++){
+            currSpace = currBord[xval][yval];
+            currPeice = currSpace.peice;
+            idLength = currSpace.id.length
+            spaceID = Number(currSpace.id.substring(2, idLength));
+            if(currPeice != null){
+                currPeice.style.left = ((((spaceID-1)%8) * 80)+8) + "px";
+                currPeice.style.top = ((((spaceID - ((spaceID-1)%8))/8)*80)) + "px";
             }
         }
     }
