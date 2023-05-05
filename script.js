@@ -545,16 +545,16 @@ function makeAMove(){
                         postMoveX = move.toX;
                         postMoveY = move.toY;
                         if(peiceMoved.isKing){
-                            if((preMoveX==postMoveX+2) && (preMoveY==postMoveY+2) && (currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0])){
+                            if((preMoveX==postMoveX+2) && (preMoveY==postMoveY+2) && (currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0]) && (currBord[postMoveX][postMoveY].peice==null)){
                                 peicesTaken[i] = currBord[preMoveX+1][preMoveY+1].peice;
                             }
-                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY+2) && (currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0])){
+                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY+2) && (currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
                                 peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
                             }
-                            else if((preMoveX==postMoveX+2) && (preMoveY==postMoveY-2) && (currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0])){
+                            else if((preMoveX==postMoveX+2) && (preMoveY==postMoveY-2) && (currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
                                 peicesTaken[i] = currBord[preMoveX+1][preMoveY-1].peice;
                             }
-                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY-2) && (currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0])){
+                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY-2) && (currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0]) && (currBord[postMoveX][postMoveY].peice==null)){
                                 peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
                             }
                             else{
@@ -564,7 +564,7 @@ function makeAMove(){
                         else{
                             if(movingColor == "White"){
                                 if(preMoveY+2==postMoveY && preMoveX-2==postMoveX){
-                                    if(currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0]){
+                                    if(currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0]  && (currBord[postMoveX][postMoveY].peice==null)){
                                         peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
                                         if(postMoveY == 7){
                                             madeKing = true;
@@ -576,7 +576,7 @@ function makeAMove(){
                                         moveValid = false;                                    }
                                 }
                                 else if((preMoveY+2==postMoveY)&&(preMoveX+2 == postMoveX)){
-                                    if(currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0]){
+                                    if(currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0]  && (currBord[postMoveX][postMoveY].peice==null)){
                                         peicesTaken[i] = currBord[preMoveX+1][preMoveY+1].peice;
                                         if(postMoveY == 7){
                                             madeKing = true;
@@ -594,7 +594,7 @@ function makeAMove(){
                             }
                             else if(movingColor == "Black"){
                                 if(preMoveY-2==postMoveY && preMoveX-2==postMoveX){
-                                    if(currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0]){
+                                    if((currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
                                         peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
                                         if(postMoveY == 7){
                                             madeKing = true;
@@ -606,7 +606,7 @@ function makeAMove(){
                                         moveValid = false;                                    }
                                 }
                                 else if((preMoveY-2==postMoveY)&&(preMoveX+2 == postMoveX)){
-                                    if(currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0]){
+                                    if((currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
                                         peicesTaken[i] = currBord[preMoveX+1][preMoveY-1].peice;
                                         if(postMoveY == 0){
                                             madeKing = true;
