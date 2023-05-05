@@ -1,20 +1,18 @@
 // This file contains the functions that determine the actions of the AI
 
 /*
-MCTS algorithm:
-    1. Set the current game state as the root node
-    2. For every possible move, add a node to the tree
-    3. Each node will have a value that will determine its effect on the game 
-    (the higher the value, the closer the AI is to winning)
-    4. Traverse the tree and find the path you want (highest value, lowest value, etc.)
+New algorithm:
+    1. Get all the allowed moves the AI can perform
+    2. Recurse until the game is over
+    3. Find the path that lead to victory (or random if we want)
+    4. Make the AI move according to that path
 */
 
 class Node {
-    constructor(state, move) {
+    constructor(state) {
         this.left = null;
         this.right = null;
         this.state = state;
-        this.move = move;
         this.nextMoves = [];
         this.numWins = 0;
         this.iterations = 0;
@@ -55,11 +53,6 @@ class Tree {
             if (value == currNode.value) return currNode.value;
             if (currNode.left == null || currNode.right == null) return null;
         }
-    }
-
-    Move(move) {
-        move = makeAMove();
-        return move;
     }
 
     allowedMoves() {
@@ -134,19 +127,19 @@ class Tree {
         return currBord;
     }
 
-    simulation() {
-        let state = new Tree(currBord, null); // copy of game state
-        while (!gameOver) {
-            let moves = state.allowedMoves();
-            const randomMove = moves[Math.floor(Math.random() * moves.length)];
-        }
+    move(movesList) {
+        if (gameOver) return;
+        let movesList = this.allowedMoves();
+        this.move(movesList.allowedMoves);
     }
+
 }
 
 
-function MonteCarloTreeSearch(currState) { // root is the current game state
-    var MCT = new Tree();
-    const root = new Node(currState, null);
-    MCT.addNode(root);
-    
+function TreeSearch(currState) { 
+    let state = document.getElementsByName(currBord);
+    var TS = new Tree(state, 0);
+    const root = new Node(state);
+    TS.addNode(root);
+    var moves = TS.move();
 }
