@@ -256,6 +256,7 @@ function makeAMove(){
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
                                 currTurn = "White";
+                                document.getElementById("turn-color").textContent = "White";
                                 moveList = [];
                                 
                                 
@@ -270,6 +271,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
+                                    document.getElementById("turn-color").textContent = "White";
                                     moveList = [];
     
                                 }
@@ -294,6 +296,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
+                                    document.getElementById("turn-color").textContent = "White";
                                     moveList = [];
 
                                 }
@@ -306,6 +309,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
+                                    document.getElementById("turn-color").textContent = "White";
                                     moveList = [];
 
                                 }
@@ -327,6 +331,7 @@ function makeAMove(){
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
                                 currTurn = "White";
+                                document.getElementById("turn-color").textContent = "White";
                                 moveList = [];
 
                             }
@@ -345,6 +350,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = "none";
                                     currTurn = "White";
+                                    document.getElementById("turn-color").textContent = "White";
                                     moveList = [];
     
                                 }
@@ -361,6 +367,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
+                                    document.getElementById("turn-color").textContent = "White";
                                     moveList = [];
 
                                 }
@@ -389,6 +396,7 @@ function makeAMove(){
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
                                 currTurn = "Black";
+                                document.getElementById("turn-color").textContent = "Black";
                                 moveList = [];
                                 console.log("made move King wight");
                                 
@@ -403,6 +411,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
+                                    document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
     
                                 }
@@ -415,6 +424,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
+                                    document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
 
                                 }
@@ -427,6 +437,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
+                                    document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
 
                                 }
@@ -439,6 +450,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
+                                    document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
 
                                 }
@@ -463,6 +475,7 @@ function makeAMove(){
                                 oneMove.peice.Y = oneMove.toY;
                                 moveList = [];
                                 currTurn = "Black";
+                                document.getElementById("turn-color").textContent = "Black";
                             }
                             else{
                                 console.log("checking for jumping whight peice");
@@ -479,6 +492,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
+                                    document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
     
                                 }
@@ -495,6 +509,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
+                                    document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
 
                                 }
@@ -644,6 +659,7 @@ function makeAMove(){
                     console.log("debugging info");
                     console.log(currTurn);
                     currTurn = notMovingColor;
+                    document.getElementById("turn-color").textContent = notMovingColor;
                     console.log(notMovingColor);
                     console.log(movingColor);
                     peiceMoved.X = postMoveX;
