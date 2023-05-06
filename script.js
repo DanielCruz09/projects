@@ -257,7 +257,7 @@ function makeAMove(){
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
                                 currTurn = "White";
-                                document.getElementById("turn-color").textContent = "White";
+                                document.getElementById("turn-color").textContent = "Red";
                                 moveList = [];
                                 
                                 
@@ -272,7 +272,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
-                                    document.getElementById("turn-color").textContent = "White";
+                                    document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
     
                                 }
@@ -297,7 +297,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
-                                    document.getElementById("turn-color").textContent = "White";
+                                    document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
 
                                 }
@@ -310,7 +310,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
-                                    document.getElementById("turn-color").textContent = "White";
+                                    document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
 
                                 }
@@ -333,7 +333,7 @@ function makeAMove(){
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
                                 currTurn = "White";
-                                document.getElementById("turn-color").textContent = "White";
+                                document.getElementById("turn-color").textContent = "Red";
                                 moveList = [];
 
                             }
@@ -351,7 +351,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = "none";
                                     currTurn = "White";
-                                    document.getElementById("turn-color").textContent = "White";
+                                    document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
     
                                 }
@@ -368,7 +368,7 @@ function makeAMove(){
                                     oneMove.peice.Y = oneMove.toY;
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
-                                    document.getElementById("turn-color").textContent = "White";
+                                    document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
 
                                 }
@@ -665,7 +665,12 @@ function makeAMove(){
                     console.log("debugging info");
                     console.log(currTurn);
                     currTurn = notMovingColor;
-                    document.getElementById("turn-color").textContent = notMovingColor;
+                    if(notMovingColor == "Black"){
+                        document.getElementById("turn-color").textContent = "Black";
+                    }
+                    else{
+                        document.getElementById("turn-color").textContent = "Red";
+                    }
                     console.log(notMovingColor);
                     console.log(movingColor);
                     peiceMoved.X = postMoveX;
