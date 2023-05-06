@@ -6,10 +6,17 @@ var checker = function(piece, color) {
     this.king = false;
 }
 
-checker.prototype.isEmpty = function(pos) {
-    let sq = document.getElementById("SQ" + pos);
-    if (sq == null) return true;
+checker.prototype.isEmpty = function(x, y) {
+    let pos = currBord[x][y];
+    if (pos == null) return true;
     return false;
+}
+
+checker.prototype.capture() = function(oldx, oldy, newx, newy) {
+    let currentChecker = currBord[oldx][oldy].piece;
+    let target = currBord[newx][newy].piece;
+    currentChecker = target;
+    target = null;
 }
 
 checker.prototype.getAllowedMoves = function () {
@@ -22,7 +29,7 @@ checker.prototype.getAllowedMoves = function () {
                 var northwest = board[i-1][j-1];
                 var northeast = board[i+1][j-1];
                 var directions = [];
-                if (this.color == "black" & isEmpty(i+1+j+1) & isEmpty(i-1+j+1) & isEmpty(i-1+j-1) & isEmpty(i+1+j-1)) {
+                if (this.color == "black" & this.isEmpty(i+1,j+1) & this.isEmpty(i-1,j+1) & this.isEmpty(i-1,j-1) & this.isEmpty(i+1,j-1)) {
                     if (i == 0) {
                         directions.push(southeast);
                         if (j == 0) {
@@ -63,13 +70,22 @@ checker.prototype.getAllowedMoves = function () {
                         moves.board[i][j] = directions;
                     }
                 }
+                var randNum = Math.floor(Math.random() * 100);
+                if (this.color == "black" & !this.isEmpty(i+1,j+1)) {
+                    // Capture is possible, move to the square diagonally
+                    if (randNum > 50) this.capture(i+1,j+1,i+2,j+2);
+                }
+                if (this.color == "black" & !this.isEmpty(i-1,j+1)) {
+                    if (randNum > 50) this.capture(i-1,j+1,i-2,j+2);
+                }
             }
         }
         return moves;
     }
 
 checker.prototype.move = function () {
-    // TODO
+    var nextMoves = this.getAllowedMoves();
+    var randInt = Math.floor(Math.random() * 64);
 }
 
 
