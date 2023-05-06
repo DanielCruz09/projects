@@ -240,6 +240,7 @@ document.onmousemove = function(e){//function runs whenever mouse moves
 //if move is valid, updates peice.x, peice.y the currbord, takes taken peices, and makes peice a king if nessesary
 function makeAMove(){
     if(moveList.length == 0){
+        resetMove();
         return;
     }
     else{
@@ -315,6 +316,7 @@ function makeAMove(){
                                 }
                                 else{
                                     console.log("move not vallid 1");
+                                    resetMove();
                                     return;
                                 }
                     
@@ -336,7 +338,6 @@ function makeAMove(){
 
                             }
                             else{
-                                console.log("checking for jump");
                                 if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y-1].peice.id[0] == "W"))){
                                     console.log("jumped left");
                                     if(oneMove.toY == 0){
@@ -373,6 +374,7 @@ function makeAMove(){
                                 }
                                 else{
                                     console.log("move not vallid 2");
+                                    resetMove()
                                     return;
                                 }
 
@@ -382,6 +384,7 @@ function makeAMove(){
                         }
                     }
                     else{
+                        resetMove();
                         return;
                     }
                 }
@@ -456,6 +459,7 @@ function makeAMove(){
                                 }
                                 else{
                                     console.log("move not vallid 3");
+                                    resetMove();
                                     return;
                                 }
                     
@@ -478,7 +482,6 @@ function makeAMove(){
                                 document.getElementById("turn-color").textContent = "Black";
                             }
                             else{
-                                console.log("checking for jumping whight peice");
                                 if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice.id[0] == "B"))){
                                     console.log("whight took to the right");
                                     if(oneMove.toY == 7){
@@ -514,6 +517,7 @@ function makeAMove(){
 
                                 }
                                 else{
+                                    resetMove();
                                     console.log("move not vallid 4");
                                     return;
                                 }
@@ -522,12 +526,14 @@ function makeAMove(){
                     }
                     else{
                         console.log("its not your turn");
+                        resetMove();
                         return;
                     }
                 }
             }
             else{
                 console.log("squair occupied");
+                resetMove();
                 return;
             }
         }
@@ -672,6 +678,7 @@ function makeAMove(){
                     if(madeKing){
                         peiceMoved.isKing = false;
                     }
+                    resetMove();
                     console.log("move made was not a vallid Move");
                     return;
                 }
