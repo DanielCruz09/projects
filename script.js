@@ -329,6 +329,7 @@ function makeAMove(){
                                 currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
                                 if(oneMove.toY == 0){
                                     oneMove.peice.isKing = true;//here add the code for making a peice a king
+                                    oneMove.peice.style.border = "4px solid #FFFF00";
                                 }
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
@@ -342,6 +343,7 @@ function makeAMove(){
                                     console.log("jumped left");
                                     if(oneMove.toY == 0){
                                         oneMove.peice.isKing = true;//here add the code for making a peice a king
+                                        oneMove.peice.style.border = "4px solid #FFFF00";
                                     }
                                         currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                     currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -359,6 +361,7 @@ function makeAMove(){
                                     console.log("Black jumped right");
                                     if(oneMove.toY == 0){
                                         oneMove.peice.isKing = true;//here add the code for making a peice a king
+                                        oneMove.peice.style.border = "4px solid #FFFF00";
                                     }    
                                     currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                     currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -474,6 +477,7 @@ function makeAMove(){
                                 currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
                                 if(oneMove.toY == 7){
                                     oneMove.peice.isKing = true;//here add the code for making a peice a king
+                                    oneMove.peice.style.border = "4px solid #FFFF00";
                                 }
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
@@ -486,6 +490,7 @@ function makeAMove(){
                                     console.log("whight took to the right");
                                     if(oneMove.toY == 7){
                                         oneMove.peice.isKing = true;//here add code for making a peice a king
+                                        oneMove.peice.style.border = "4px solid #FFFF00";
                                     }
                                     currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                     currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -503,6 +508,7 @@ function makeAMove(){
                                     console.log("white took to left");
                                     if(oneMove.toY == 7){
                                         oneMove.peice.isKing = true;//here add code for making a peice a king
+                                        oneMove.peice.style.border = "4px solid #FFFF00";
                                     }
                                     currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                     currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -659,6 +665,7 @@ function makeAMove(){
                     }
                     if(madeKing){
                         //here add code for making peice a king, the peice is in peiceMoved varable
+                        peiceMoved.style.border = "4px solid #FFFF00";
                     }
                     currBord[peiceMoved.X][peiceMoved.Y].peice = null;
                     currBord[postMoveX][postMoveY].peice = peiceMoved;
