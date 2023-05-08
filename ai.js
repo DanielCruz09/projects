@@ -1,4 +1,6 @@
-// // This file contains the functions that determine the actions of the AI
+// This file contains the functions that determine the actions of the AI
+
+var length = 0;
 
 checker.prototype.isEmpty = function(x, y) {
     let pos = currBord[x][y].piece;
@@ -19,8 +21,16 @@ checker.prototype.getAllowedMoves = function (x,y) {
         var southwest = board[x-1][y+1];
         var directions = [];
         if (this.color == "white") {
-            if (this.isEmpty(x+1,y+1)) directions.push(southeast);
-            if (this.isEmpty(x-1,y+1)) directions.push(southwest);
+            if (this.isEmpty(x+1,y+1)) {
+                directions.push(southeast);
+                length++;
+            }
+            else this.capture(x+1,y+1,x+2,y+2);
+            if (this.isEmpty(x-1,y+1)) {
+                directions.push(southwest);
+                length++;
+            }
+            else this.capture(x-1,y+1,x-2,y+2);
         }
         return directions;
     }
@@ -76,10 +86,13 @@ function init() {
 
 function move() {
     init();
-    var nextMoves = [];
     for (let i=0; i<64; i++) {
         for (let j=0; j<64; j++) {
-            // TODO
+            var chosenChecker = currBord[i][j].piece;
+            var nextMoves = chosenChecker.getAllowedMoves(i,j);
+            if (length != 0) {
+                chosenChecker.setCoord(nextMoves[0]);
+            }
         }
     }
 }
