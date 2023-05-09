@@ -235,6 +235,36 @@ document.onmousemove = function(e){//function runs whenever mouse moves
     }
 }
 
+function resetGame(){
+    for(let x=0; x<8;x++){
+        for(let y=0; y<8; y++){
+            currBord[x][y].peice = null;
+        }
+    }
+    var checkerNumber = 1;
+    for(var i=0; i<3; i++){
+        for(var j=0; j<4; j++){
+            document.getElementById("W" + checkerNumber).isKing = false;
+            document.getElementById("B" + checkerNumber).isKing = false;
+            document.getElementById("B" + checkerNumber).style.display = "block";
+            document.getElementById("W" + checkerNumber).style.display = "block";
+
+            currBord[j*2+(i%2)][i].peice = document.getElementById("W" + checkerNumber);
+            document.getElementById("W" + checkerNumber).X = j*2+(i%2);
+            document.getElementById("W" + checkerNumber).Y = i;
+            currBord[j*2+((i+1)%2)][i+5].peice = document.getElementById("B" + checkerNumber);
+            document.getElementById("B" + checkerNumber).X = j*2+((i+1)%2);
+            document.getElementById("B" + checkerNumber).Y = i+5;
+            checkerNumber++
+        }
+    }
+    resetMove();
+    
+    
+    
+}
+
+
 
 function checkForWiner(){
     for(let color=0;color<2;color++){
@@ -242,13 +272,20 @@ function checkForWiner(){
         checkingColor = ["Black", "White"][color];
         for(let x=0;x<8;x++){
             for(let y=0;y<8;y++){
-                if(currBord[x][y].peice.id[0] == checkingColor[0]){
-                    currColorLost = false;
+                if(currBord[x][y].peice != null){
+                    if(currBord[x][y].peice.id[0] === checkingColor[0]){
+                        currColorLost = false;
+                    }
                 }
             }
         }
         if(currColorLost){
-            //display not currColor won and return
+            if(checkingColor === "White"){
+                alert("Black has won!");
+            }
+            else if(checkingColor === "Black"){
+                alert("White has won!");
+            }
         }
     }
     return;
@@ -293,6 +330,7 @@ function makeAMove(){
                                     currTurn = "White";
                                     document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
+                                    checkForWiner();
     
                                 }
                                 else if((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice.id[0] == "W")){
@@ -305,6 +343,7 @@ function makeAMove(){
                                     takenPice.style.display = 'none';
                                     currTurn = "White";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice.id[0] == "W"))){
@@ -318,6 +357,7 @@ function makeAMove(){
                                     currTurn = "White";
                                     document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice.id[0] == "W"))){
@@ -331,6 +371,7 @@ function makeAMove(){
                                     currTurn = "White";
                                     document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else{
@@ -392,6 +433,7 @@ function makeAMove(){
                                     currTurn = "White";
                                     document.getElementById("turn-color").textContent = "Red";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else{
@@ -438,6 +480,7 @@ function makeAMove(){
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
+                                    checkForWiner();
     
                                 }
                                 else if((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice.id[0] == "B")){
@@ -451,6 +494,7 @@ function makeAMove(){
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else if(((oneMove.toX == oneMove.peice.X+2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X+1][oneMove.peice.Y+1].peice.id[0] == "B"))){
@@ -464,6 +508,7 @@ function makeAMove(){
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y-2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y-1].peice.id[0] == "B"))){
@@ -477,6 +522,7 @@ function makeAMove(){
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else{
@@ -521,6 +567,7 @@ function makeAMove(){
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
+                                    checkForWiner();
     
                                 }
                                 else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice.id[0] == "B"))){
@@ -539,6 +586,7 @@ function makeAMove(){
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
                                     moveList = [];
+                                    checkForWiner();
 
                                 }
                                 else{
@@ -723,6 +771,7 @@ function makeAMove(){
                     peiceMoved.Y = postMoveY;
                     moveList = [];
                     console.log("jumped multable peices");
+                    checkForWiner();
                     return;
                 }
                 else{
