@@ -88,7 +88,38 @@ checker.prototype.checkIfKing = function () {
     }
 }
 
+checker.prototype.isEmpty = function(x, y) {
+    let pos = currBord[x][y].piece;
+    if (pos == null) return true;
+    return false;
+}
 
+checker.prototype.capture = function(oldx, oldy, newx, newy) {
+    let currentChecker = currBord[oldx][oldy].piece;
+    let target = currBord[newx][newy].piece;
+    currentChecker.setCoord(newx, newy);
+    target = null;
+}
+
+checker.prototype.getAllowedMoves = function (x,y) {
+        var board = currBord;
+        var southeast = board[x+1][y+1];
+        var southwest = board[x-1][y+1];
+        var directions = [];
+        if (this.color == "white") {
+            if (this.isEmpty(x+1,y+1)) {
+                directions.push(southeast);
+                length++;
+            }
+            else this.capture(x+1,y+1,x+2,y+2);
+            if (this.isEmpty(x-1,y+1)) {
+                directions.push(southwest);
+                length++;
+            }
+            else this.capture(x-1,y+1,x-2,y+2);
+        }
+        return directions;
+    }
 
 
 for (var i = 1; i <= 64; i++)
@@ -139,9 +170,23 @@ for (var i = 9; i <= 12; i++) {
     block[24 + 2 * i].pieceId = b_checker[i];
 }
 
+var currBord = [[],[],[],[],[],[],[],[]];//list contains the board with cowardnits x0-7, y0-7
+for(let i=0; i<8; i++){
+    for(var j=0; j<8; j++){
+        sq = document.getElementById("SQ" + (i*8+j+1));
+        sq.X = j;
+        sq.Y = i;
+        currBord[j][i] = sq;
+    }
+
+}
 
 the_checker = w_checker;
-
+var xofset = document.getElementById("SQ1").getBoundingClientRect().left; //these are the distence from the edge of screen to the board
+var yofset = document.getElementById("SQ1").getBoundingClientRect().top;
+var moveList = [];//this is a list of the moves that the player wants to make. sence multable moves happen durring a jump, this 
+//is cumulitive
+var currTurn = "Black";
 
 
 function getDimension() {
@@ -177,6 +222,68 @@ document.getElementsByTagName("BODY")[0].onresize = function () {
         for (var i = 1; i <= 12; i++) {
             b_checker[i].setCoord(0, 0);
             w_checker[i].setCoord(0, 0);
+        }
+    }
+}
+
+var dragingPeice = null;
+
+function inSquair(x, y,){//If element is in a squair, returns that squair. oatherwise returns false.
+    
+    if(((x > xofset) &&(x < xofset+640))&&((y > yofset)&&(y < yofset+640))){
+        let idNumber = (((x - xofset) - (x - xofset)%80)/80) + ((((y - yofset) - (y - yofset)%80)/80)*8) + 1;
+        return idNumber;
+    }
+    else{
+        return false;
+    }
+}
+
+function makeMovable(idList){ //this function needs to run once to make an object movable
+    let id;
+    for(let i=0; i<idList.length; i++){
+        id = idList[i];
+        let checker = document.getElementById(id);
+        checker.style.position = "absolute"; //I beleave this makes the position an absolute x,y value
+        checker.onmousedown = function(){ //this adds a finction that happnes when peice is clicked
+            dragingPeice = checker;//the peice that is currently being dragged
+        }
+    }
+}
+
+document.onmouseup = function(e){//when you relese your mouse, stop dragging
+    let currpeice = dragingPeice;
+    dragingPeice = null;
+    if(currpeice != null){
+        let x = e.pageX;
+        let y = e.pageY;
+        let endingSquair = inSquair(x, y);
+        if(endingSquair != false){
+            currpeice.style.left = ((((endingSquair-1)%8) * 80)+8) + "px"; //move peice to center of SQ 
+            currpeice.style.top = ((((endingSquair - ((endingSquair-1)%8))/8)*80)) + "px";
+            moveList.push({peice:currpeice, to:endingSquair, toX: (endingSquair-1)%8, toY: (((endingSquair-1) - ((endingSquair-1)%8))/8)});
+        }
+        dragingPeice = null;
+    }
+}
+
+document.onmousemove = function(e){//function runs whenever mouse moves
+    if(dragingPeice != null){
+        var x = e.pageX;
+        var y = e.pageY;
+        dragingPeice.style.left = (x - xofset - 27) + "px";
+        dragingPeice.style.top = (y - yofset - 27) + "px";
+    }
+}
+
+
+
+function move() {
+    for (let i=0; i<64; i++) {
+        for (let j=0; j<64; j++) {
+            var chosenChecker = currBord[i][j].piece;
+            var nextMoves = chosenChecker.getAllowedMoves(i,j);
+            if (length != 0) chosenChecker.setCoord(nextMoves[0]);
         }
     }
 }
