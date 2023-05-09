@@ -276,8 +276,6 @@ document.onmousemove = function(e){//function runs whenever mouse moves
     }
 }
 
-
-
 function move() {
     for (let i=0; i<64; i++) {
         for (let j=0; j<64; j++) {
