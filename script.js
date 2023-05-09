@@ -236,6 +236,25 @@ document.onmousemove = function(e){//function runs whenever mouse moves
 }
 
 
+function checkForWiner(){
+    for(let color=0;color<2;color++){
+        let currColorLost = true;
+        checkingColor = ["Black", "White"][color];
+        for(let x=0;x<8;x++){
+            for(let y=0;y<8;y++){
+                if(currBord[x][y].peice.id[0] == checkingColor[0]){
+                    currColorLost = false;
+                }
+            }
+        }
+        if(currColorLost){
+            //display not currColor won and return
+        }
+    }
+    return;
+}
+
+
 //runs when the move button is pressed, 
 //if move is valid, updates peice.x, peice.y the currbord, takes taken peices, and makes peice a king if nessesary
 function makeAMove(){
@@ -572,17 +591,37 @@ function makeAMove(){
                         postMoveX = move.toX;
                         postMoveY = move.toY;
                         if(peiceMoved.isKing){
-                            if((preMoveX==postMoveX+2) && (preMoveY==postMoveY+2) && (currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0]) && (currBord[postMoveX][postMoveY].peice==null)){
-                                peicesTaken[i] = currBord[preMoveX+1][preMoveY+1].peice;
+                            if((preMoveX-2==postMoveX) && (preMoveY-2==postMoveY)){
+                                if((currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0]) && (currBord[postMoveX][postMoveY].peice==null)){
+                                    peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
+                                }
+                                else{
+                                    moveValid = false;
+                                }
                             }
-                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY+2) && (currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
-                                peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
+                            else if((preMoveX+2==postMoveX) && (preMoveY-2==postMoveY)){
+                                if((currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
+                                    peicesTaken[i] = currBord[preMoveX+1][preMoveY-1].peice;
+                                }
+                                else{
+                                    moveValid = false;
+                                }
                             }
-                            else if((preMoveX==postMoveX+2) && (preMoveY==postMoveY-2) && (currBord[preMoveX+1][preMoveY-1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
-                                peicesTaken[i] = currBord[preMoveX+1][preMoveY-1].peice;
+                            else if((preMoveX-2==postMoveX) && (preMoveY+2==postMoveY)){
+                                if((currBord[preMoveX-1][preMoveY+1].peice.id[0] == notMovingColor[0])  && (currBord[postMoveX][postMoveY].peice==null)){
+                                    peicesTaken[i] = currBord[preMoveX-1][preMoveY+1].peice;
+                                }
+                                else{
+                                    moveValid = false;
+                                }
                             }
-                            else if((preMoveX==postMoveX-2) && (preMoveY==postMoveY-2) && (currBord[preMoveX-1][preMoveY-1].peice.id[0] == notMovingColor[0]) && (currBord[postMoveX][postMoveY].peice==null)){
-                                peicesTaken[i] = currBord[preMoveX-1][preMoveY-1].peice;
+                            else if((preMoveX+2==postMoveX) && (preMoveY+2==postMoveY)){
+                                if((currBord[preMoveX+1][preMoveY+1].peice.id[0] == notMovingColor[0]) && (currBord[postMoveX][postMoveY].peice==null)){
+                                    peicesTaken[i] = currBord[preMoveX+1][preMoveY+1].peice;
+                                }
+                                else{
+                                    moveValid = false;
+                                }
                             }
                             else{
                                 moveValid = false
