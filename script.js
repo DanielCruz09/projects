@@ -247,8 +247,9 @@ function resetGame(){
             document.getElementById("W" + checkerNumber).isKing = false;
             document.getElementById("B" + checkerNumber).isKing = false;
             document.getElementById("B" + checkerNumber).style.display = "block";
-            document.getElementById("W" + checkerNumber).style.display = "block";
-
+            document.getElementById("W" + checkerNumber).style.display = "block";                                   
+            document.getElementById("W" + checkerNumber).style.border = "4px solid white";
+            document.getElementById("B" + checkerNumber).style.border = "4px solid white;";
             currBord[j*2+(i%2)][i].peice = document.getElementById("W" + checkerNumber);
             document.getElementById("W" + checkerNumber).X = j*2+(i%2);
             document.getElementById("W" + checkerNumber).Y = i;
