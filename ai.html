@@ -3,13 +3,13 @@
 
 <head>
     <title>
-
+        AI vs Player
     </title>
-    <link rel="stylesheet" href="2P.css">
+    <link rel="stylesheet" href="AI.css">
 
 </head>
 
-<body onload="makeMovable(['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12'])" id="ht">
+<body onload="makeMovable(['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12'])" id="ht">
     <!-- astea 2 sunt puse ca indexarea claselor sa inceapa de la 1 -->
     <div class="checker white_checker" style="display:none"> </div>
     <div class="checker black_checker" style="display:none"> </div>
@@ -131,8 +131,8 @@
         <div class="clear_float"> </div>
 
     </div>
-    <script src="script.js"> </script>
-    <script src="ai.js"></script>
+
+    <script src="AI.js"> </script>
 </body>
 
 </html>
@@ -141,14 +141,12 @@
 <div class="scores-container">
     <div class="score red-score">Red Score: <span id="red-score">0</span></div>
     <div class="score black-score">Black Score: <span id="black-score">0</span></div>
-    <div id="turn">It's <span class="turn-color" id="turn-color">Black</span>'s turn</div>
+    <div id="turn">It's <span class="turn-color" id="turn-color">Red</span>'s turn</div>
     <div id="winner"></div>
-    <button id="restart-btn">Restart Game</button>
-    <button id="move-btn" onclick="move()">Move</button>
+    <button id="move-btn" onclick="makeAMove();makeAImove()">Move</button>
     <button id="reset-move-btn" onclick="resetMove()">Reset Move</button>
 </div>
-<script src="scripts.js"></script>
-<script src="ai.js"></script>
+<script src="AI.js"></script>
 </body>
 
 </html>
