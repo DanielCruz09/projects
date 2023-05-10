@@ -240,56 +240,35 @@ var check;
 for (let k=0; k<idList.length; k++) {
     id = idList[k];
     check = document.getElementById(id);
-    for (let i=1; i<56; i++) {
-        let row = 0;
-        let col = 0;
-        if (id == 'W1' || id == 'W9') {
-            if (row == 7 || col == 7) {
-                row = 0;
-                col = 0;
-            }
-            if (currBord[row+1][col+1].peice == null) {
-                let cPiece = check;
-                let tPiece = i+9;
-                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
-            }  
+    if (id == 'W1' || id == 'W9') {
+        if (currBord[check.X+1][check.Y+1].peice == null) {
+            let cPiece = check;
+            let tPiece = check.X+9;
+            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+        }  
+    }
+    else if (id == 'W8') {
+        if (currBord[check.X-1][check.Y+1].peice == null) {
+            let cPiece = check;
+            let tPiece = check.X+7;
+            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
         }
-        else if (id == 'W8') {
-            if (row == 0 || col == 7) {
-                row = 1;
-                col = 0;
-            }
-            if (currBord[row-1][col+1].peice == null) {
-                let cPiece = check;
-                let tPiece = i+7;
-                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
-            }
+    }
+    else {
+        if (currBord[check.X+1][check.Y+1].peice == null) {
+            let cPiece = check;
+            let tPiece = check.X+7;
+            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
         }
-        else {
-            if (row == 0 || col == 7) {
-                row = 1;
-                col = 0;
-            }
-            if (currBord[row-1][col+1].peice == null) {
-                let cPiece = check;
-                let tPiece = i+7;
-                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
-            }
-            if (row == 7 || col == 7) {
-                row = 0;
-                col = 0;
-            }
-            if (currBord[row+1][col+1].peice == null) {
-                let cPiece = check;
-                let tPiece = i+9;
-                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
-            } 
-        }
-        row++;
-        col++;
+        if (currBord[check.X-1][check.Y+1].peice == null) {
+            let cPiece = check;
+            let tPiece = check.X+9;
+            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+        } 
     }
 }
 console.log(moveListAI[0].peice);
+console.log(moveListAI[0].to);
 //runs when the move button is pressed, 
 //if move is valid, updates peice.x, peice.y the currbord, takes taken peices, and makes peice a king if nessesary
 function makeAMove(){
