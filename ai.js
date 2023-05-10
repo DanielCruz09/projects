@@ -234,7 +234,7 @@ document.onmousemove = function(e){//function runs whenever mouse moves
 }
 
 moveList = [];
-
+//makes the AI's move
 function makeAImove(){
     moveList = [];
     var idList = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12'];
