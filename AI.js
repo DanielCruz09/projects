@@ -244,31 +244,30 @@ for (let k=0; k<idList.length; k++) {
         if (currBord[check.X+1][check.Y+1].peice == null) {
             let cPiece = check;
             let tPiece = check.X+9;
-            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            moveListAI.push({peice:cPiece, to:tPiece, toX: check.X+1, toY: check.Y+1});
         }  
     }
     else if (id == 'W8') {
         if (currBord[check.X-1][check.Y+1].peice == null) {
             let cPiece = check;
             let tPiece = check.X+7;
-            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            moveListAI.push({peice:cPiece, to:tPiece, toX: check.X+1, toY: check.Y+1});
         }
     }
     else {
         if (currBord[check.X+1][check.Y+1].peice == null) {
             let cPiece = check;
             let tPiece = check.X+7;
-            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            moveListAI.push({peice:cPiece, to:tPiece, toX: check.X+1, toY: check.Y+1});
         }
         if (currBord[check.X-1][check.Y+1].peice == null) {
             let cPiece = check;
             let tPiece = check.X+9;
-            moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            moveListAI.push({peice:cPiece, to:tPiece, toX: check.X+1, toY: check.Y+1});
         } 
     }
 }
-console.log(moveListAI[0].peice);
-console.log(moveListAI[0].to);
+currTurn = "Black";
 //runs when the move button is pressed, 
 //if move is valid, updates peice.x, peice.y the currbord, takes taken peices, and makes peice a king if nessesary
 function makeAMove(){
