@@ -234,17 +234,29 @@ document.onmousemove = function(e){//function runs whenever mouse moves
 }
 
 var moveListAI = [];
-var currPiece;
-var targetPiece;
-for (let i=1; i<58; i++) {
-    if (block[i+7].ocupied == false) {
-        console.log(i+7);
-        currPiece = block[i];
-        targetPiece = block[i+7];
-        moveListAI.push({peice:currPiece, to:targetPiece, toX: (targetPiece-1)%8, toY: (((targetPiece-1) - ((targetPiece-1)%8))/8)});
+var idList = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12'];
+var id;
+var check;
+for (let k=0; k<idList.length; k++) {
+    id = idList[k];
+    check = document.getElementById(id);
+    for (let i=1; i<58; i++) {
+        if (id == 'W1' | id == 'W9') {
+            if (block[i+9].ocupied == false) {
+                let cPiece = check;
+                let tPiece = i+9;
+                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            }  
+        }
+        else {
+            if (block[i+7].ocupied == false) {
+                let cPiece = check;
+                let tPiece = i+7;
+                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            }
+        }
     }
 }
-
 //runs when the move button is pressed, 
 //if move is valid, updates peice.x, peice.y the currbord, takes taken peices, and makes peice a king if nessesary
 function makeAMove(){
@@ -398,15 +410,14 @@ function makeAMove(){
                     else{
                         resetMove();
                         return;
-                    }
+                    }   
                 }
                 else if(currTurn == "White"){
+                    console.log("It is AI's turn");
                     oneMove = moveListAI[0];
-                    console.log("We reached here");
                     if(oneMove.peice.id[0] == "W"){
                         if(oneMove.peice.isKing){
                             if((oneMove.toX==oneMove.peice.X+1 || oneMove.peice.X -1==oneMove.toX)&&(oneMove.toY==oneMove.peice.Y+1||oneMove.toY == oneMove.peice.Y-1)){
-                                
                                 //scussesfully made move
                                 currBord[oneMove.peice.X][oneMove.peice.Y].peice = null;
                                 currBord[oneMove.toX][oneMove.toY].peice = oneMove.peice;
@@ -492,7 +503,7 @@ function makeAMove(){
                                 }
                                 oneMove.peice.X = oneMove.toX;
                                 oneMove.peice.Y = oneMove.toY;
-                                moveList = [];
+                                moveListAI = [];
                                 currTurn = "Black";
                                 document.getElementById("turn-color").textContent = "Black";
                             }
@@ -512,7 +523,7 @@ function makeAMove(){
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
-                                    moveList = [];
+                                    moveListAI = [];
     
                                 }
                                 else if(((oneMove.toX == oneMove.peice.X-2)&&(oneMove.toY==oneMove.peice.Y+2)&&(currBord[oneMove.peice.X-1][oneMove.peice.Y+1].peice.id[0] == "B"))){
@@ -530,10 +541,11 @@ function makeAMove(){
                                     takenPice.style.display = 'none';
                                     currTurn = "Black";
                                     document.getElementById("turn-color").textContent = "Black";
-                                    moveList = [];
+                                    moveListAI = [];
 
                                 }
                                 else{
+                                    console.log(oneMove.peice);
                                     resetMove();
                                     console.log("move not vallid 4");
                                     return;
