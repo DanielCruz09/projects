@@ -240,23 +240,56 @@ var check;
 for (let k=0; k<idList.length; k++) {
     id = idList[k];
     check = document.getElementById(id);
-    for (let i=1; i<58; i++) {
-        if (id == 'W1' | id == 'W9') {
-            if (block[i+9].ocupied == false) {
+    for (let i=1; i<56; i++) {
+        let row = 0;
+        let col = 0;
+        if (id == 'W1' || id == 'W9') {
+            if (row == 7 || col == 7) {
+                row = 0;
+                col = 0;
+            }
+            if (currBord[row+1][col+1].peice == null) {
                 let cPiece = check;
                 let tPiece = i+9;
                 moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
             }  
         }
-        else {
-            if (block[i+7].ocupied == false) {
+        else if (id == 'W8') {
+            if (row == 0 || col == 7) {
+                row = 1;
+                col = 0;
+            }
+            if (currBord[row-1][col+1].peice == null) {
                 let cPiece = check;
                 let tPiece = i+7;
                 moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
             }
         }
+        else {
+            if (row == 0 || col == 7) {
+                row = 1;
+                col = 0;
+            }
+            if (currBord[row-1][col+1].peice == null) {
+                let cPiece = check;
+                let tPiece = i+7;
+                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            }
+            if (row == 7 || col == 7) {
+                row = 0;
+                col = 0;
+            }
+            if (currBord[row+1][col+1].peice == null) {
+                let cPiece = check;
+                let tPiece = i+9;
+                moveListAI.push({peice:cPiece, to:tPiece, toX: (tPiece-1)%8, toY: (((tPiece-1) - ((tPiece-1)%8))/8)});
+            } 
+        }
+        row++;
+        col++;
     }
 }
+console.log(moveListAI[0].peice);
 //runs when the move button is pressed, 
 //if move is valid, updates peice.x, peice.y the currbord, takes taken peices, and makes peice a king if nessesary
 function makeAMove(){
@@ -545,7 +578,6 @@ function makeAMove(){
 
                                 }
                                 else{
-                                    console.log(oneMove.peice);
                                     resetMove();
                                     console.log("move not vallid 4");
                                     return;
